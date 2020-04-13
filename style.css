@@ -1,0 +1,24 @@
+h1 {
+  font-family: 'Abril Fatface';
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  border: 1px solid grey;
+  background-color: lightsalmon;
+}
+
+.main-container {
+box-sizing: border-box;
+border: 1px solid grey;
+width: 750px;
+height: 300px;
+}
+
+h3 {
+  font-family: 'Source Sans Pro';
+}
+
+ul {
+  font-family: 'Source Sans Pro';
+  list-style: none;
+}
