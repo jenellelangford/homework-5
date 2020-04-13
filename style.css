@@ -3,13 +3,19 @@ h1 {
   font-size: 50px;
   color: white;
   text-align: center;
-  border: 1px solid grey;
+  border: 1px solid lightgrey;
   background-color: lightsalmon;
+}
+
+.search-container {
+  height: 400px;
+  padding-left: 15px;
+  font-family: 'Source Sans Pro';
 }
 
 .main-container {
 box-sizing: border-box;
-border: 1px solid grey;
+border: 1px solid lightgrey;
 width: 750px;
 height: 300px;
 }
