@@ -1,4 +1,13 @@
 h1 {
+    font-family: 'Abril Fatface';
+    font-size: 50px;
+    color: white;
+    text-align: center;
+    border: 1px solid lightgrey;
+    background-color: lightsalmon;
+}
+
+.currentHeader {
   font-family: 'Abril Fatface';
   font-size: 50px;
   color: white;
@@ -13,18 +22,31 @@ h1 {
   font-family: 'Source Sans Pro';
 }
 
-.main-container {
-box-sizing: border-box;
-border: 1px solid lightgrey;
-width: 750px;
-height: 300px;
+.jumbo-container {
+  border: 1px solid lightgrey;
+  background-color: white;
+  width: 750px;
+  height: 300px;
+  text-align: center;
 }
 
 h3 {
-  font-family: 'Source Sans Pro';
+  font-family: 'Abril Fatface';
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  background-color: lightsalmon;
+  float: right;
 }
 
 ul {
   font-family: 'Source Sans Pro';
   list-style: none;
+}
+
+.card-body {
+  border: 1px solid lightgrey;
+  height: 200px;
+  width: 200px;
+  align: horizontal;
 }

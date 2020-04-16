@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather Dashboard</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
-  <link rel="scriptsheet" href="../homework-5/script.js">
   <link rel="stylesheet" href="../homework-5/style.css">
 
 
@@ -27,8 +27,8 @@
       <div class=col-4>
         <nav class="navbar navbar-expand-lg">
           <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="City" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input id="userInput" class="form-control mr-sm-2" type="search" placeholder="City" aria-label="Search">
+            <button id="button" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </nav>
         <div class="search-container">
@@ -36,48 +36,224 @@
             <div class="col-12">
               <div class="card" style="width: 18rem;">
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
+                  <!--
+                  <li class="list-group-item">City Name</li>
+                  <li class="list-group-item">City Name</li>
+                  <li class="list-group-item">City Name</li>
+                  <li class="list-group-item">City Name</li>
+                  <li class="list-group-item">City Name</li>
+                  <li class="list-group-item">City Name</li>
+                  -->
                 </ul>
               </div>
-
             </div>
-
           </div>
+        </div>
+      </div>
+
+      <!--MAIN/WEATHER BODY-->
+      <div class="jumbotron jumbotron-fluid">
+        <div class="jumbo-container">
+          <div class="currentHeader"></div>
+          <ul>
+            <div class="temp"></div>
+            <div class="humidity"></div>
+            <div class="windspeed"></div>
+          </ul>
 
         </div>
       </div>
 
 
-      <!--MAIN/WEATHER BODY-->
-      <div class="main-container">
-        <div id="mainbody">
-          <div class=col-8>
-            <h3>City (04/13/2020)</h3>
-            <ul>
-              <li>Temperature:</li>
-              <li>Humidity:</li>
-              <li>Wind Speed:</li>
-              <li>UV Index:</li>
-            </ul>
+  </section>
+
+  <!--FIVE DAY FORCAST-->
+  <section id="forecast">
+    <div class="forecast-container">
+      <div class=col-8>
+        <h3>5-Day Forecast:</h3>
+
+        <!--Create five day forecast here-->
+
+       <div class="boxes"></div> 
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <div class="card-temp"></div>
+            <div class="card-humidity"></div>
           </div>
         </div>
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title"></h5>
+            <p class="card-text"></p>
+          </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title"></h5>
+            <p class="card-text"></p>
+          </div>
+        </div> 
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title"></h5>
+            <p class="card-text"></p>
+          </div>
+        </div> 
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Date</h5>
+            <p class="temp-text">Info</p>
+            <p class="humid-text">Info</p>
+          </div>
+        </div> 
+
+
+
       </div>
     </div>
   </section>
 
 
+  <!---------------------------------------------------------------------------------------------->
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+
+
+    // Creat a click function that populates the search menu and city name
+    $("#button").on("click", function (event) {
+      event.preventDefault();
+
+      // All the variables
+      var cityName = $("#userInput").val();
+
+      var cityInput = document.querySelector(".currentHeader");
+      var searchList = document.querySelector(".list-group");
+
+      var cityStorage = {
+        name: ""
+      };
+
+
+      $("#button").on("click", function () {
+        var city = $("#userInput").val();
+        cityStorage.name = name;
+        saveToStorage();
+        renderData();
+      })
+
+      function saveToStorage() {
+        localStorage.saveItem("cityStorage".JSON.stringify(cityStorage));
+      }
+
+      function getFromStorage() {
+        var storeData = localStorage.getItem("cityStorage");
+        if (storeData) {
+          cityStorage = JSON.parse(storeData);
+        }
+        else (
+          cityStorage = {}
+        )
+      }
+
+      function renderData() {
+        $(".search-container").text(cityStorage.name);
+      }
+
+
+
+
+      // API key and URL
+      var APIKey = "f19da92a5f341532b71554980a953434";
+      var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
+
+      // The city from the search is then added to our array
+      $(".currentHeader").text(cityName);
+
+      // Update the list with the new city
+
+      // Start the ajax function
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function (response) {
+
+        var city = response.name;
+        var wind = response.wind;
+        var windSpeed = wind.speed;
+        var windDeg = wind.deg;
+        var humidity = response.main.humidity;
+        var temp = response.main.temp;
+        var tempF = (Math.floor((temp - 273.15) * 1.80 + 32));
+
+        $("div.currentHeader").text(city);
+        $("div.windspeed").text("Wind speed: " + windSpeed + " mph at " + windDeg + " degrees");
+        $("div.humidity").text("Humidity Level: " + humidity);
+        $("div.temp").text("Temperature: " + tempF + " degrees fahrenheit");
+
+      });
+
+      // 5 day forecast URL
+      var listOfForecasts = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
+
+      $.ajax({
+        url: listOfForecasts,
+        method: "GET"
+      }).then(function (response) {
+
+        var cardDate = response.date;
+        var cardhumidity = response.humidity;
+        var cardtemp = response.temp;
+        var cardtempF = (Math.floor((temp - 273.15) * 1.80 + 32));
+
+        $("div.card-humidity").text("Humidity Level: " + humidity);
+        $("div.card-temp").text("Temperature: " + tempF + " degrees fahrenheit");
+
+
+        function getForecastForEachDay(listOfForecasts) {
+          var currentDate = "";
+          var forecastArray = [];
+
+          for (var i = 0; i < listOfForecasts.length; i++) {
+            // We want to capture one weather object for each day in the list. Once we've captured that
+            // object, we can ignore all other objects for the same day
+            var dateOfListItem = listOfForecasts[i];
+            if (dateOfListItem !== currentDate) {
+              // We need to extract just the date part and ignore the time
+              currentDate = dateOfListItem;
+              // Push this weather object to the forecasts array
+              if (forecastArray.length < 5) {
+                forecastArray.push(listOfForecasts[i]);
+              }
+            }
+          }
+        }
+        getForecastForEachDay(response.list);
+
+        for (var i = 0; i < forecastArray < 5; i++) {
+          var box1 = $("<div>");
+          $(".card-text").append(box1);
+        };
+      });
+    }); 
 
 
 
 
 
-
+  </script>
 
 </body>
+
+<!--JQUERY LINKS-->
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+  integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 
 </html>
