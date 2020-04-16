@@ -74,37 +74,38 @@
         <h3>5-Day Forecast:</h3>
 
         <!--Create five day forecast here-->
+        <div class="row">
 
        <div class="boxes"></div> 
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 10rem;">
           <div class="card-body">
             <div class="card-temp"></div>
             <div class="card-humidity"></div>
           </div>
         </div>
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 10rem;">
           <div class="card-body">
             <h5 class="card-title"></h5>
             <p class="card-text"></p>
           </div>
         </div>
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 10rem;">
           <div class="card-body">
             <h5 class="card-title"></h5>
             <p class="card-text"></p>
           </div>
         </div> 
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 10rem;">
           <div class="card-body">
             <h5 class="card-title"></h5>
             <p class="card-text"></p>
           </div>
         </div> 
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 10rem;">
           <div class="card-body">
-            <h5 class="card-title">Date</h5>
-            <p class="temp-text">Info</p>
-            <p class="humid-text">Info</p>
+            <h5 class="card-title"></h5>
+            <p class="temp-text"></p>
+            <p class="humid-text"></p>
           </div>
         </div> 
 
@@ -112,6 +113,7 @@
 
       </div>
     </div>
+  </div>
   </section>
 
 
@@ -203,19 +205,22 @@
         url: listOfForecasts,
         method: "GET"
       }).then(function (response) {
+        console.log(response);
 
         var cardDate = response.date;
-        var cardhumidity = response.humidity;
-        var cardtemp = response.temp;
-        var cardtempF = (Math.floor((temp - 273.15) * 1.80 + 32));
+        var cardHumidity = response.humidity;
+        var cardTemp = response.temp;
+        var cardTempF = (Math.floor((cardTemp - 273.15) * 1.80 + 32));
 
-        $("div.card-humidity").text("Humidity Level: " + humidity);
-        $("div.card-temp").text("Temperature: " + tempF + " degrees fahrenheit");
+        $("div.card-humidity").text("Humidity Level: " + cardHumidity);
+        $("div.card-temp").text("Temperature: " + cardTempF + " degrees fahrenheit");
+
+        var forecastArray = [];
 
 
         function getForecastForEachDay(listOfForecasts) {
           var currentDate = "";
-          var forecastArray = [];
+          
 
           for (var i = 0; i < listOfForecasts.length; i++) {
             // We want to capture one weather object for each day in the list. Once we've captured that
@@ -227,11 +232,12 @@
               // Push this weather object to the forecasts array
               if (forecastArray.length < 5) {
                 forecastArray.push(listOfForecasts[i]);
+                console.log(forecastArray);
               }
             }
           }
         }
-        getForecastForEachDay(response.list);
+        getForecastForEachDay(response);
 
         for (var i = 0; i < forecastArray < 5; i++) {
           var box1 = $("<div>");
