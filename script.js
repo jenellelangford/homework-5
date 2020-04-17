@@ -1,8 +1,9 @@
+
     // Create a click function that populates the search menu and city name
     $("#button").on("click", function (event) {
       event.preventDefault();
 
-      // All the variables
+      // List of variables
       var cityInput = document.querySelector(".currentHeader");
       var searchList = document.querySelector(".list-group");
       var cardDate = document.querySelector(".card-humidity");
@@ -65,7 +66,7 @@
       })
 
 
-
+      // HERE WE BEGIN THE API AND AJAX PROCESS 
 
 
       // API key and URL
@@ -102,7 +103,7 @@
       
 //================================================================================================================================================
 
-/*
+
 
       // 5 day forecast URL
       var listOfForecasts = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
@@ -136,12 +137,12 @@
       });
 
 
-      */
+      
 
  //================================================================================================================================================
 
 
-       /*
+       
 
        then(function (response) {
 
@@ -152,44 +153,6 @@
 
         $("div.card-humidity").text("Humidity Level: " + cardHumidity);
         $("div.card-temp").text("Temperature: " + cardTempF + " degrees fahrenheit");
-        */
 
-
-        
-
-    /*
-
-    var cityStorage = {
-        name: ""
-      };
-
-
-      function saveToStorage() {
-        localStorage.saveItem("cityStorage".JSON.stringify(cityStorage));
-      }
-
-      function getFromStorage() {
-        var storeData = localStorage.getItem("cityStorage");
-        if (storeData) {
-          cityStorage = JSON.parse(storeData);
-        }
-        else (
-          cityStorage = {}
-        )
-      }
-
-      function renderData() {
-        $(".city1").text(cityStorage.name);
-      }
-
-            // Local Storage Function 
-            $("city1").on("click", function () {
-        cityStorage.name = name;
-        var citySearch = ("#userInput").val();
-        saveToStorage();
-        renderData();
-      })
-
-*/
 
 
