@@ -144,7 +144,7 @@
 
        
 
-       then(function (response) {
+    /*then(function (response) 
 
         var cardDate = forecastArray.date;
         var cardHumidity = forecastArray.list.main.humidity;
@@ -154,5 +154,4 @@
         $("div.card-humidity").text("Humidity Level: " + cardHumidity);
         $("div.card-temp").text("Temperature: " + cardTempF + " degrees fahrenheit");
 
-
-
+       */
