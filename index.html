@@ -35,15 +35,7 @@
           <div class="row">
             <div class="col-12">
               <div class="card" style="width: 18rem;">
-                <ul class="list-group list-group-flush">
-                  <button class="city1"></button>
-                  <button class="city2"></button>
-                  <button class="city3"></btton>
-                  <button class="city4"></button>
-                  <button class="city5"></button>
-                  <button class="city6"></button>
-                  <button class="city7"></button>
-                </ul>
+                <ul class="list-group"></ul>
               </div>
             </div>
           </div>
@@ -76,30 +68,35 @@
         <div class="row">
 
        <div class="boxes"></div> 
+
         <div class="card" style="width: 10rem;">
           <div class="card-body">
             <div class="card-temp"></div>
             <div class="card-humidity"></div>
           </div>
         </div>
+
         <div class="card" style="width: 10rem;">
           <div class="card-body">
             <h5 class="card-title"></h5>
             <p class="card-text"></p>
           </div>
         </div>
+
         <div class="card" style="width: 10rem;">
           <div class="card-body">
             <h5 class="card-title"></h5>
             <p class="card-text"></p>
           </div>
         </div> 
+
         <div class="card" style="width: 10rem;">
           <div class="card-body">
             <h5 class="card-title"></h5>
             <p class="card-text"></p>
           </div>
         </div> 
+
         <div class="card" style="width: 10rem;">
           <div class="card-body">
             <h5 class="card-title"></h5>
@@ -108,9 +105,8 @@
           </div>
         </div> 
 
-
-
       </div>
+
     </div>
   </div>
   </section>
@@ -124,36 +120,53 @@
   <script type="text/javascript">
 
 
-    // Creat a click function that populates the search menu and city name
+    // Create a click function that populates the search menu and city name
     $("#button").on("click", function (event) {
       event.preventDefault();
 
       // All the variables
-      var cityName = $("#userInput").val();
-
       var cityInput = document.querySelector(".currentHeader");
       var searchList = document.querySelector(".list-group");
+      var cardDate = document.querySelector(".card-humidity");
+      var cardHumidity = document.querySelector(".card-humidity");
+      var cardTemp = document.querySelector(".card-humidity");
 
-      var cityStorage = {
-        name: ""
+      // This updates the title with the name of the city from the user input
+      var cityName = $("#userInput").val();
+
+      // This will update the list with the user inputs
+      var cityArray = [];
+      cityArray.push(cityName);
+      
+      for (var i = 0; i < cityArray.length; i ++) {
+        var liTag = $("<li>");
+        liTag.attr("class", "libutton");
+        $(".list-group").append(liTag);
+
+        var listbutton = $("<button>");
+        listbutton.attr("class", "buttonlist");
+        $(liTag).append(listbutton);
+
+        $(listbutton).text(cityArray);
+
       };
 
+      // This is the storage for the user input and the list, and will load upon opening the browser
 
-      $("#button").on("click", function () {
-        var city = $("#userInput").val();
-        cityStorage.name = name;
-        saveToStorage();
-        renderData();
-      })
+      var cityStorage = {
+        name: "",
+        temp: "",
+        humidity: ""
+      }
 
       function saveToStorage() {
-        localStorage.saveItem("cityStorage".JSON.stringify(cityStorage));
+        localStorage.setItem("cityStorage".JSON.stringify(cityStorage));
       }
 
       function getFromStorage() {
         var storeData = localStorage.getItem("cityStorage");
         if (storeData) {
-          cityStorage = JSON.parse(storeData);
+          cityStorage = JSON.parse(storeData)
         }
         else (
           cityStorage = {}
@@ -161,8 +174,18 @@
       }
 
       function renderData() {
-        $(".search-container").text(cityStorage.name);
+        $("buttonlist").text(cityStorage);
       }
+
+      $("listbutton").on("click", function() {
+        var name = ("userInput").val();
+        cityStorage.name = name;
+        cityStorage.temp = temp;
+        cityStorage.humidity = humidity;
+        saveToStorage();
+        renderData();
+      })
+
 
 
 
@@ -175,7 +198,6 @@
       $(".currentHeader").text(cityName);
 
       // Update the list with the new city
-
       // Start the ajax function
       $.ajax({
         url: queryURL,
@@ -197,56 +219,100 @@
 
       });
 
+    });
+
+      
+//================================================================================================================================================
+
+/*
+
       // 5 day forecast URL
       var listOfForecasts = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
 
       $.ajax({
         url: listOfForecasts,
         method: "GET"
-      }).then(function (response) {
-        console.log(response);
-
-        var cardDate = response.date;
-        var cardHumidity = response.humidity;
-        var cardTemp = response.temp;
-        var cardTempF = (Math.floor((cardTemp - 273.15) * 1.80 + 32));
-
-        $("div.card-humidity").text("Humidity Level: " + cardHumidity);
-        $("div.card-temp").text("Temperature: " + cardTempF + " degrees fahrenheit");
-
-        var forecastArray = [];
-
-
-        function getForecastForEachDay(listOfForecasts) {
+      }).then(function getForecastForEachDay(listOfForecasts) {
           var currentDate = "";
-          
+
+          var forecastArray = [];
+          console.log(forecastArray[0]);
+
 
           for (var i = 0; i < listOfForecasts.length; i++) {
             // We want to capture one weather object for each day in the list. Once we've captured that
             // object, we can ignore all other objects for the same day
-            var dateOfListItem = listOfForecasts[i];
+            var dateOfListItem = listOfForecasts[i].dt_txt.split(" ")[0];
             if (dateOfListItem !== currentDate) {
               // We need to extract just the date part and ignore the time
-              currentDate = dateOfListItem;
+              currentDate = dateOfListItem.split(" ")[0];
               // Push this weather object to the forecasts array
               if (forecastArray.length < 5) {
                 forecastArray.push(listOfForecasts[i]);
-                console.log(forecastArray);
               }
             }
           }
-        }
-        getForecastForEachDay(response);
 
-        for (var i = 0; i < forecastArray < 5; i++) {
-          var box1 = $("<div>");
-          $(".card-text").append(box1);
-        };
+        getForecastForEachDay(listOfForecasts);
+
       });
-    }); 
 
 
+      */
 
+ //================================================================================================================================================
+
+
+       /*
+
+       then(function (response) {
+
+        var cardDate = forecastArray.date;
+        var cardHumidity = forecastArray.list.main.humidity;
+        var cardTemp = forecastArray.list.main.temp;
+        var cardTempF = (Math.floor((cardTemp - 273.15) * 1.80 + 32));
+
+        $("div.card-humidity").text("Humidity Level: " + cardHumidity);
+        $("div.card-temp").text("Temperature: " + cardTempF + " degrees fahrenheit");
+        */
+
+
+        
+
+    /*
+
+    var cityStorage = {
+        name: ""
+      };
+
+
+      function saveToStorage() {
+        localStorage.saveItem("cityStorage".JSON.stringify(cityStorage));
+      }
+
+      function getFromStorage() {
+        var storeData = localStorage.getItem("cityStorage");
+        if (storeData) {
+          cityStorage = JSON.parse(storeData);
+        }
+        else (
+          cityStorage = {}
+        )
+      }
+
+      function renderData() {
+        $(".city1").text(cityStorage.name);
+      }
+
+            // Local Storage Function 
+            $("city1").on("click", function () {
+        cityStorage.name = name;
+        var citySearch = ("#userInput").val();
+        saveToStorage();
+        renderData();
+      })
+
+*/
 
 
   </script>

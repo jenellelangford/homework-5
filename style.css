@@ -39,39 +39,21 @@ h3 {
   float: right;
 }
 
-ul {
-  font-family: 'Source Sans Pro';
-  list-style: none;
+.libutton {
+  list-style-type: none;
 }
+
+.buttonlist {
+  color: white;
+  font-family: 'Abril Fatface';
+  font-size: 35px;
+  background-color: lightsalmon;
+  height: 50px;
+  width: 100%;
+
+}
+
 
 .card-body {
   height: 200px;
-}
-
-.city1 {
-  height: 50px;
-}
-
-.city2 {
-  height: 50px;
-}
-
-.city3 {
-  height: 50px;
-}
-
-.city4 {
-  height: 50px;
-}
-
-.city5 {
-  height: 50px;
-}
-
-.city6 {
-  height: 50px;
-}
-
-.city7 {
-  height: 50px;
 }
